@@ -14,3 +14,4 @@ pylint = "^2.5.3"
 
 [tool.poetry.scripts]
 main = "facerecognitionpy.__main__:main"
+training = "facerecognitionpy.face_train:train"

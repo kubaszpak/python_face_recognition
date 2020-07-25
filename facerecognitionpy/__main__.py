@@ -18,8 +18,12 @@ def main():
             cv2.rectangle(img, (x,y), (x+w,y+h),(255,0,0),2)
             
         cv2.imshow("Video", img)
+        # print(cv2.waitKey(1))
         key = cv2.waitKey(1) & 0xFF
-        if key == ord("q"):
+        # print(key)
+        # print(ord('q'))
+        # print(ord('s'))
+        if key == ord("s"):
             break
     cap.release()
     cv2.destroyAllWindows() 
