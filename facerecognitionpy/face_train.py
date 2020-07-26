@@ -11,3 +11,4 @@ def train():
             if file.endswith(".png") of file.endswith(".jpg"):
                 path = os.path.join(root,file)
                 print(path)
+                # learning os
