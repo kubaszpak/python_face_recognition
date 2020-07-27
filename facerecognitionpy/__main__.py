@@ -24,7 +24,7 @@ def main():
             my_face = os.path.join(img_location,'my/')
             os.makedirs(my_face,exist_ok=True)
             if(counter % 50 == 0):
-                my_face_file = os.path.join(my_face,f'my_pic{counter}.png')
+                my_face_file = os.path.join(my_face,f'my_pic{counter//50}.png')
                 cv2.imwrite(my_face_file, roi_color)
             counter += 1
         cv2.imshow('Video', img)
