@@ -7,6 +7,8 @@ authors = ["kubaszpak <jakub.szpak.it@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 opencv-python = "^4.3.0"
+pillow = "^7.2.0"
+opencv-contrib-python = "^4.3.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
