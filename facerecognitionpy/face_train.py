@@ -11,7 +11,7 @@ faceCascade = cv2.CascadeClassifier(cascade_location)
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 # current_id = 0
-# labels_ids = {}
+labels_ids = {}
 y_train = []
 x_train = []
 
