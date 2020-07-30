@@ -21,7 +21,6 @@ def main():
         conf_counter[key] = 0
         conf_counter[key] += delay_value * picture_list.count(key)
     conf_counter[-1] = 1 # -1 stands for unknown person
-    print(conf_counter)
     while True:
         success, img = cap.read()
         imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -36,7 +35,8 @@ def main():
             if(conf >= 60 and conf < 90):
                 print(label_ids[id_],conf)
                 for key in conf_counter:
-
+                    if key != id_:
+                        conf_counter[key] = 0
                 if(conf_counter[id_] % delay_value == 0):
                     img_location = os.path.join(os.getcwd(),'resources/')
                     my_face = os.path.join(img_location,label_ids[id_])
@@ -46,6 +46,7 @@ def main():
                 conf_counter[-1] = 1
             else:
                 print('unknown')
+
                 if(conf_counter[-1] % delay_value == 0):
                     decision = input('Did a new person just show up? (y/n)')
                     img_location = os.path.join(os.getcwd(),'resources/')
@@ -61,8 +62,11 @@ def main():
                     my_face_file = os.path.join(my_face,f'{name}0.png')
                     cv2.imwrite(my_face_file, roi_color)
                     label_ids, picture_list = face_train.train()
-                    recognizer.read("trainner.yml")    
-                    conf_counter[-1] = 0
+                    recognizer.read("trainner.yml")
+                    for key in label_ids:
+                        conf_counter[key] = 0
+                        conf_counter[key] += delay_value * picture_list.count(key)
+                    conf_counter[-1] = 0 # -1 stands for unknown person 
                 conf_counter[-1] += 1
         cv2.imshow('Video', img)
         key = cv2.waitKey(1) & 0xFF
