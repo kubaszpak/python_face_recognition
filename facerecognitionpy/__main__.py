@@ -12,13 +12,13 @@ cascade_location = os.path.join(os.getcwd(),'cascades/haarcascade_frontalface_de
 faceCascade = cv2.CascadeClassifier(cascade_location)
 
 def main():
-    delay_value = 200
+    delay_value = 100
     conf_counter = {}
     label_ids, picture_list = face_train.train()
     recognizer = cv2.face.LBPHFaceRecognizer_create()
     recognizer.read("trainner.yml")
     for key in label_ids:
-        conf_counter[key] = 0
+        conf_counter[key] = 1
         conf_counter[key] += delay_value * picture_list.count(key)
     conf_counter[-1] = 1 # -1 stands for unknown person
     while True:
@@ -36,7 +36,7 @@ def main():
                 print(label_ids[id_],conf)
                 for key in conf_counter:
                     if key != id_:
-                        conf_counter[key] = 0
+                        conf_counter[key] = 1
                 if(conf_counter[id_] % delay_value == 0):
                     img_location = os.path.join(os.getcwd(),'resources/')
                     my_face = os.path.join(img_location,label_ids[id_])
@@ -64,9 +64,9 @@ def main():
                     label_ids, picture_list = face_train.train()
                     recognizer.read("trainner.yml")
                     for key in label_ids:
-                        conf_counter[key] = 0
+                        conf_counter[key] = 1
                         conf_counter[key] += delay_value * picture_list.count(key)
-                    conf_counter[-1] = 0 # -1 stands for unknown person 
+                    conf_counter[-1] = 1 # -1 stands for unknown person 
                 conf_counter[-1] += 1
         cv2.imshow('Video', img)
         key = cv2.waitKey(1) & 0xFF
