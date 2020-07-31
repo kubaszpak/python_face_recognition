@@ -18,7 +18,7 @@ def main():
     recognizer = cv2.face.LBPHFaceRecognizer_create()
     recognizer.read("trainner.yml")
     for key in label_ids:
-        conf_counter[key] = delay_value * picture_list.count(key) + 1
+        conf_counter[key] = delay_value * (picture_list.count(key)-1) + 1
     conf_counter[-1] = 1 # -1 stands for unknown person
     print(label_ids, picture_list, conf_counter)
     while True:
@@ -32,12 +32,15 @@ def main():
             roi_gray = imgGray[y:y+h , x:x+w]
 
             id_, conf = recognizer.predict(roi_gray)
-            if(conf >= 60 and conf < 90):
+
+
+            if(conf >= 70 and conf <= 90):
+                cv2.putText(img,label_ids[id_],(x,y),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2,cv2.LINE_AA)
                 print(label_ids[id_],conf)
 
                 for key in conf_counter:
                     if key != id_:
-                        conf_counter[key] = delay_value * picture_list.count(key) + 1
+                        conf_counter[key] = delay_value * (picture_list.count(key)-1) + 1
                 if(conf_counter[id_] % delay_value == 0):
                     img_location = os.path.join(os.getcwd(),'resources/')
                     my_face = os.path.join(img_location,label_ids[id_])
@@ -66,16 +69,16 @@ def main():
                         for key, value in label_ids.items(): 
                             if name == value: 
                                 special_key = key
-                        print(conf_counter[special_key])
+                        # print(conf_counter[special_key])
                         my_face_file = os.path.join(my_face,f'{name}{conf_counter[special_key]//delay_value}.png')
                     cv2.imwrite(my_face_file, roi_color)
                     label_ids, picture_list = face_train.train()
                     recognizer.read("trainner.yml")
                     for key in label_ids:
-                        conf_counter[key] = delay_value * picture_list.count(key) + 1
+                        conf_counter[key] = delay_value * (picture_list.count(key)-1) + 1
                     conf_counter[-1] = 1 # -1 stands for unknown person 
                 conf_counter[-1] += 1
-                print(label_ids, picture_list, conf_counter)
+                # print(label_ids, picture_list, conf_counter)
         cv2.imshow('Video', img)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
