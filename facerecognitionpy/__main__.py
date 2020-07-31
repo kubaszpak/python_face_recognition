@@ -18,25 +18,26 @@ def main():
     recognizer = cv2.face.LBPHFaceRecognizer_create()
     recognizer.read("trainner.yml")
     for key in label_ids:
-        conf_counter[key] = 1
-        conf_counter[key] += delay_value * picture_list.count(key)
+        conf_counter[key] = delay_value * picture_list.count(key) + 1
     conf_counter[-1] = 1 # -1 stands for unknown person
+    print(label_ids, picture_list, conf_counter)
     while True:
         success, img = cap.read()
         imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        faces = faceCascade.detectMultiScale(imgGray,1.1,5)
+        faces = faceCascade.detectMultiScale(imgGray,1.1,4)
 
         for (x,y,w,h) in faces:
             cv2.rectangle(img, (x,y), (x+w,y+h),(255,0,0),2)
-            roi_color = img[y:y+h , x:x+w]
+            roi_color = img[y:y+h, x:x+w]
             roi_gray = imgGray[y:y+h , x:x+w]
 
             id_, conf = recognizer.predict(roi_gray)
             if(conf >= 60 and conf < 90):
                 print(label_ids[id_],conf)
+
                 for key in conf_counter:
                     if key != id_:
-                        conf_counter[key] = 1
+                        conf_counter[key] = delay_value * picture_list.count(key) + 1
                 if(conf_counter[id_] % delay_value == 0):
                     img_location = os.path.join(os.getcwd(),'resources/')
                     my_face = os.path.join(img_location,label_ids[id_])
@@ -59,15 +60,22 @@ def main():
                             print('Try different name this one is probably taken')
                             my_face = os.path.join(img_location,name)
                             os.makedirs(my_face)
-                    my_face_file = os.path.join(my_face,f'{name}0.png')
+                        my_face_file = os.path.join(my_face,f'{name}0.png')
+                    else:
+                        special_key = None
+                        for key, value in label_ids.items(): 
+                            if name == value: 
+                                special_key = key
+                        print(conf_counter[special_key])
+                        my_face_file = os.path.join(my_face,f'{name}{conf_counter[special_key]//delay_value}.png')
                     cv2.imwrite(my_face_file, roi_color)
                     label_ids, picture_list = face_train.train()
                     recognizer.read("trainner.yml")
                     for key in label_ids:
-                        conf_counter[key] = 1
-                        conf_counter[key] += delay_value * picture_list.count(key)
+                        conf_counter[key] = delay_value * picture_list.count(key) + 1
                     conf_counter[-1] = 1 # -1 stands for unknown person 
                 conf_counter[-1] += 1
+                print(label_ids, picture_list, conf_counter)
         cv2.imshow('Video', img)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):

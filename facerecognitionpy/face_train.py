@@ -24,10 +24,11 @@ def train():
                 if not label in label_ids.values():
                     label_ids[current_id] = label
                     current_id+=1
-
                 pil_image = Image.open(path).convert('L')
-                image_array = np.array(pil_image,'uint8')
-                faces = faceCascade.detectMultiScale(image_array,1.1,5)
+                size = (550,550)
+                final_image = pil_image.resize(size, Image.ANTIALIAS)
+                image_array = np.array(final_image,'uint8')
+                faces = faceCascade.detectMultiScale(image_array,1.1,4)
 
                 for (x,y,w,h) in faces:
                     roi = image_array[y:y+h,x:x+w]
