@@ -30,7 +30,7 @@ def reset_labels(label_ids, conf_counter):
     conf_counter[-1] = 1 # -1 stands for unknown person
     # print(label_ids, picture_list, conf_counter)
 
-def main():
+def rec():
 
     
     cap = cv2.VideoCapture(0)
@@ -48,7 +48,7 @@ def main():
     recognizer.read('trainner.yml')
     reset_labels(label_ids, conf_counter)
 
-    while True:
+    while cap.isOpened():
         success, img = cap.read()
         imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = faceCascade.detectMultiScale(imgGray,1.1,4)
@@ -117,4 +117,4 @@ def main():
     cv2.destroyAllWindows() 
 
 if __name__ == "__main__":
-    main()
+    rec()
