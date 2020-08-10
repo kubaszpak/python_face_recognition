@@ -3,6 +3,9 @@ import cv2
 import os
 import facerecognitionpy.face_train as face_train
 import numpy as np
+import eel
+
+eel.init('web')
 
 def get_next_photo_number(dir):
     number_list = []
@@ -30,6 +33,7 @@ def reset_labels(label_ids, conf_counter):
     conf_counter[-1] = 1 # -1 stands for unknown person
     # print(label_ids, picture_list, conf_counter)
 
+@eel.expose
 def rec():
 
     
@@ -48,7 +52,7 @@ def rec():
     recognizer.read('trainner.yml')
     reset_labels(label_ids, conf_counter)
 
-    while cap.isOpened():
+    while True:
         success, img = cap.read()
         imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = faceCascade.detectMultiScale(imgGray,1.1,4)
@@ -109,12 +113,26 @@ def rec():
 
                 conf_counter[-1] += 1
                 # print(label_ids, picture_list, conf_counter)
-        cv2.imshow('Video', img)
+        # cv2.imshow('Video', img)
+        ret,jpeg = cv2.imencode('.jpg',img)
+        frame = jpeg.tobytes()
+        # yield (b'--frame\r\n'
+        #        b'Content-Type: image/jpeg\r\n\r\n' + bytearray(frame) + b'\r\n\r\n')
+        # return img
+        # return jpeg
+        # return frame
+        return bytearray(frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
             break
     cap.release()
     cv2.destroyAllWindows() 
 
+@eel.expose
+def dummy():
+    return 'Hi'
+
 if __name__ == "__main__":
     rec()
+
+eel.start('index.html', size=(1000,600))
