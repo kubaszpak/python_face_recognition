@@ -113,15 +113,15 @@ def rec():
 
                 conf_counter[-1] += 1
                 # print(label_ids, picture_list, conf_counter)
-        # cv2.imshow('Video', img)
-        ret,jpeg = cv2.imencode('.jpg',img)
-        frame = jpeg.tobytes()
+        cv2.imshow('Video', img)
+        # ret,jpeg = cv2.imencode('.jpg',img)
+        # frame = jpeg.tobytes()
         # yield (b'--frame\r\n'
         #        b'Content-Type: image/jpeg\r\n\r\n' + bytearray(frame) + b'\r\n\r\n')
         # return img
         # return jpeg
         # return frame
-        return bytearray(frame)
+        # return bytearray(frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
             break
