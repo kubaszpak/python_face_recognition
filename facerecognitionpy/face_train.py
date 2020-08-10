@@ -35,10 +35,12 @@ def train():
                     x_train.append(roi)
                     y_train.append(current_id-1)
 
+    # print(label_ids,x_train, y_train, 'training')
+
     recognizer.train(x_train, np.array(y_train))
     my_path = os.path.join(os.getcwd(),'trainner.yml')
     if os.path.exists(my_path):
         os.remove(my_path)
     recognizer.save('trainner.yml')
-    # print(label_ids,y_train, 'training')
+
     return label_ids, y_train

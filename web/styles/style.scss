@@ -1,0 +1,177 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.logo-container {
+  position: absolute;
+  width: 4.5vmax;
+  height: 4.5vmax;
+  left: 3.4vmax;
+  top: 3.4vmax;
+  border-radius: 50%;
+  background: #5465ff;
+}
+.sidebar-outer {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 20vmax;
+  height: 20vmax;
+
+  overflow: hidden;
+  z-index: 999;
+}
+
+.face-container {
+  position: absolute;
+  width: 35vmax;
+  height: 37vmax;
+  left: 13.5vmax;
+  top: 2.8vmax;
+  border: 20px solid #bfd7ff;
+  box-sizing: border-box;
+  opacity: 0.7;
+  background-color: #788bff;
+  border-radius: 5%;
+}
+
+.data-container {
+  position: absolute;
+  //text-align: center;
+  top: 6vmax;
+  left: 62vmax;
+}
+
+.question {
+  text-align: center;
+  margin-bottom: 3vmax;
+}
+$colors: (
+  button1: #084075, button2: #95a3b1,
+);
+
+@each $button, $color in $colors {
+  .#{$button} {
+    --color: #{$color};
+    --hover: #{adjust-hue($color, 45deg)};
+  }
+}
+
+button {
+  color: var(--color);
+  transition: 0.25s;
+}
+.buttons button {
+  float: 1;
+  height: 6vmax;
+  width: 14.5vmax;
+  background: rgba(226, 253, 255, 0.62);
+  border-radius: 11.5vmax;
+  //top: 11.1vmax;
+  border: none;
+  outline: none;
+}
+
+.button1:hover,
+.button1:focus {
+  animation: pulse 1s;
+  box-shadow: 0 0 0 1em rgba(#fff,0);
+} 
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--hover);
+  }
+}
+
+.button2:hover,
+.button2:focus {
+  box-shadow: inset 0 0 0 0.5em var(--hover);
+}
+
+.buttons button:active{
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button2 {
+  margin-left: 1vmax;
+}
+.checkmark {
+  width: 2vmax;
+}
+
+.wrong {
+  width: 2vmax;
+}
+
+.nose {
+  margin: 0 auto;
+  margin-top: 2vmax;
+  width: 6vmax;
+  height: 4vmax;
+  background: rgba(226, 253, 255, 0.62);
+  transform: rotate(90deg);
+  text-align: center;
+  border-radius: 11.5vmax;
+}
+
+.holder {
+  display: block;
+  z-index: 1;
+  margin: 0 auto;
+  margin-top: 2vmax;
+  width: 30vmax;
+  height: 7.1vmax;
+  border: 5px solid #dddddd;
+  text-align: center;
+  border-radius: 11.5vmax;
+}
+
+.holder input {
+  font-family: "Montserrat", sans-serif;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  outline: none;
+  border: none;
+  text-align: center;
+}
+
+.triangle {
+  // background-color: ;
+  border-style: solid;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+#triangle1 {
+  border-color: transparent transparent transparent #9bb1ff;
+  border-width: 5.625vmax 0 0 5.625vmax;
+  bottom: 0vmax;
+  right: 0vmax;
+  transform: skewX(220deg);
+}
+
+#triangle2 {
+  border-color: transparent transparent #9bb1ff transparent;
+  border-width: 0 0 8.4375vmax 8.4375vmax;
+  bottom: -1.125vmax;
+  right: 10.125vmax;
+  transform: skewX(160deg);
+}
+
+#triangle3 {
+  bottom: 10.125vmax;
+  right: 0vmax;
+  border-width: 2.8125vmax 14.0625vmax 2.8125vmax 0;
+  border-color: transparent #9bb1ff transparent transparent;
+  transform: skewY(155deg);
+}
