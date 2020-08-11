@@ -5,6 +5,9 @@ import facerecognitionpy.face_train as face_train
 import numpy as np
 import eel
 
+cascade_location = os.path.join(os.getcwd(),'cascades/haarcascade_frontalface_default.xml')
+faceCascade = cv2.CascadeClassifier(cascade_location)
+
 eel.init('web')
 
 def get_next_photo_number(dir):
@@ -33,27 +36,27 @@ def reset_labels(label_ids, conf_counter):
     conf_counter[-1] = 1 # -1 stands for unknown person
     # print(label_ids, picture_list, conf_counter)
 
-@eel.expose
-def rec():
+class Recognizer(object):
+    def __init__(self):
+        self.cap = cv2.VideoCapture(0)
+        self.cap.set(3,640)
+        self.cap.set(4,480)
+        self.cap.set(10,100)
+        self.delay_value = 200
+        self.conf_counter = {}
+        self.label_ids = {}
+        self.label_ids, self.picture_list = face_train.train()
+        self.recognizer = cv2.face.LBPHFaceRecognizer_create()
+        self.recognizer.read('trainner.yml')
+        reset_labels(self.label_ids, self.conf_counter)
 
-    
-    cap = cv2.VideoCapture(0)
-    cap.set(3,640)
-    cap.set(4,480)
-    cap.set(10,100)
+    def __del__(self):
+        self.cap.release()
+        cv2.destroyAllWindows() 
 
-    cascade_location = os.path.join(os.getcwd(),'cascades/haarcascade_frontalface_default.xml')
-    faceCascade = cv2.CascadeClassifier(cascade_location)
+    def rec(self):
 
-    delay_value = 200
-    conf_counter = {}
-    label_ids, picture_list = face_train.train()
-    recognizer = cv2.face.LBPHFaceRecognizer_create()
-    recognizer.read('trainner.yml')
-    reset_labels(label_ids, conf_counter)
-
-    while True:
-        success, img = cap.read()
+        success, img = self.cap.read()
         imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = faceCascade.detectMultiScale(imgGray,1.1,4)
 
@@ -62,27 +65,27 @@ def rec():
             roi_color = img[y:y+h, x:x+w]
             roi_gray = imgGray[y:y+h , x:x+w]
 
-            id_, conf = recognizer.predict(roi_gray)
+            id_, conf = self.recognizer.predict(roi_gray)
 
             if(conf >= 70 and conf <= 95):
                 # print(label_ids, picture_list, conf_counter, 'why')
                 # print(id_)
-                cv2.putText(img,label_ids[id_],(x,y),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2,cv2.LINE_AA)
+                cv2.putText(img,self.label_ids[id_],(x,y),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2,cv2.LINE_AA)
 
-                for key in label_ids:
+                for key in self.label_ids:
                     if key != id_:
-                        conf_counter[key] = 1
+                        self.conf_counter[key] = 1
 
-                if(conf_counter[id_] % delay_value == 0):
-                    add_image_to_dir(roi_color, label_ids[id_])
+                if(self.conf_counter[id_] % delay_value == 0):
+                    add_image_to_dir(roi_color, self.label_ids[id_])
 
-                conf_counter[id_] += 1
-                conf_counter[-1] = 1
+                self.conf_counter[id_] += 1
+                self.conf_counter[-1] = 1
 
             else:
                 # print('unknown')
 
-                if(conf_counter[-1] % delay_value == 0):
+                if(self.conf_counter[-1] % delay_value == 0):
                     decision = input('Did a new person just show up? (y/n) ')
                     name = input('Then what is your name? ')
                     images_location = os.path.join(os.getcwd(),'resources/')
@@ -99,40 +102,21 @@ def rec():
                     add_image_to_dir(roi_color, name)
 
                     # print(label_ids, picture_list, conf_counter, 'clear')
-                    label_ids.clear()
-                    picture_list.clear()
-                    label_ids, picture_list = face_train.train()
+                    self.label_ids.clear()
+                    self.picture_list.clear()
+                    self.label_ids, self.picture_list = face_train.train()
                     new_roi = []
                     new_roi.append(roi_gray)
                     new_label = []
-                    new_label.append(max(picture_list))
-                    recognizer.update(new_roi, np.array(new_label))
+                    new_label.append(max(self.picture_list))
+                    self.recognizer.update(new_roi, np.array(new_label))
                     # recognizer.read("trainner.yml")
                 
-                    reset_labels(label_ids, conf_counter)
+                    reset_labels(self.label_ids, self.conf_counter)
 
-                conf_counter[-1] += 1
+                self.conf_counter[-1] += 1
                 # print(label_ids, picture_list, conf_counter)
         cv2.imshow('Video', img)
-        # ret,jpeg = cv2.imencode('.jpg',img)
-        # frame = jpeg.tobytes()
-        # yield (b'--frame\r\n'
-        #        b'Content-Type: image/jpeg\r\n\r\n' + bytearray(frame) + b'\r\n\r\n')
-        # return img
-        # return jpeg
-        # return frame
-        # return bytearray(frame)
-        key = cv2.waitKey(1) & 0xFF
-        if key == ord('q'):
-            break
-    cap.release()
-    cv2.destroyAllWindows() 
 
-@eel.expose
-def dummy():
-    return 'Hi'
-
-if __name__ == "__main__":
-    rec()
 
 eel.start('index.html', size=(1000,600))

@@ -15,7 +15,3 @@ eel = "^0.13.2"
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 pylint = "^2.5.3"
-
-[tool.poetry.scripts]
-main = "facerecognitionpy.__main__:rec"
-training = "facerecognitionpy.face_train:train"
