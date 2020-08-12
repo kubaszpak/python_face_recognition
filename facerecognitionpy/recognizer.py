@@ -8,6 +8,9 @@ import eel
 cascade_location = os.path.join(os.getcwd(),'cascades/haarcascade_frontalface_default.xml')
 faceCascade = cv2.CascadeClassifier(cascade_location)
 
+def check(value):
+    print("It is working " + value)
+
 class Recognizer(object):
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
@@ -55,31 +58,32 @@ class Recognizer(object):
                     # print('unknown')
 
                     if(self.conf_counter[-1] % self.delay_value == 0):
-                        decision = input('Did a new person just show up? (y/n) ')
-                        name = input('Then what is your name? ')
-                        images_location = os.path.join(os.getcwd(),'resources/')
-                        label_dir_location = os.path.join(images_location,name)
-                        if decision == 'y':
-                            if(not os.path.isdir(label_dir_location)):
-                                os.makedirs(label_dir_location)
-                            else:
-                                print('Try different name, this one is probably taken ')
-                                name = input('Enter different name: ')
-                                label_dir_location = os.path.join(images_location,name)
-                                os.makedirs(label_dir_location)
+                        eel.changeDisplay("wave-one")(check)
+                        # decision = input('Did a new person just show up? (y/n) ')
+                        # name = input('Then what is your name? ')
+                        # images_location = os.path.join(os.getcwd(),'resources/')
+                        # label_dir_location = os.path.join(images_location,name)
+                        # if decision == 'y':
+                        #     if(not os.path.isdir(label_dir_location)):
+                        #         os.makedirs(label_dir_location)
+                        #     else:
+                        #         print('Try different name, this one is probably taken ')
+                        #         name = input('Enter different name: ')
+                        #         label_dir_location = os.path.join(images_location,name)
+                        #         os.makedirs(label_dir_location)
 
-                        add_image_to_dir(roi_color, name)
+                        # add_image_to_dir(roi_color, name)
 
                         # print(label_ids, picture_list, conf_counter, 'clear')
                         self.label_ids.clear()
                         self.picture_list.clear()
-                        self.label_ids, self.picture_list = face_train.train()
-                        new_roi = []
-                        new_roi.append(roi_gray)
-                        new_label = []
-                        new_label.append(max(self.picture_list))
-                        self.recognizer.update(new_roi, np.array(new_label))
-                        # recognizer.read("trainner.yml")
+                        # self.label_ids, self.picture_list = face_train.train()
+                        # new_roi = []
+                        # new_roi.append(roi_gray)
+                        # new_label = []
+                        # new_label.append(max(self.picture_list))
+                        # self.recognizer.update(new_roi, np.array(new_label))
+                        # # recognizer.read("trainner.yml")
                     
                         reset_labels(self.label_ids, self.conf_counter)
 

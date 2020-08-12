@@ -46,6 +46,10 @@ body {
   max-height: 100%;
 }
 
+#wave-one {
+  display:none;
+}
+
 .data-container {
   position: absolute;
   //text-align: center;
@@ -126,6 +130,10 @@ button {
   transform: rotate(90deg);
   text-align: center;
   border-radius: 11.5vmax;
+}
+
+#wave-two{
+  display:none;
 }
 
 .holder {
