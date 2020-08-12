@@ -29,12 +29,12 @@ body {
   z-index: 999;
 }
 
-.face-container {
+.rectangle {
   position: absolute;
-  width: 35vmax;
-  height: 37vmax;
-  left: 13.5vmax;
-  top: 2.8vmax;
+  width: 39vmax;
+  height: 30vmax;
+  left: 10vmax;
+  top: 4.7vmax;
   border: 20px solid #bfd7ff;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -43,9 +43,9 @@ body {
   border-radius: 5%;
 }
 
-.face {
-  width: 80%;
-  height: 80%;
+#face {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .data-container {

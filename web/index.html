@@ -8,16 +8,15 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles/style.css" />
-    <script type="text/javascript" src="./scripts/script.js"></script>
-    <script type="text/javascript" src="./eel.js"></script>
+    <script type="text/javascript" src="eel.js"></script>
+    <script type="text/javascript" src="script.js"></script>
     <title>Face Recognition</title>
   </head>
   <body>
     <div class="logo-container">
       <div class="face-container">
         <div class="rectangle">
-          <img id="face" src="">
-          <p class="test" id= "testP"></p>
+          <img id="face" src="" />
         </div>
       </div>
     </div>
@@ -29,12 +28,13 @@
         <img src="./icons/clear-black-18dp.svg" alt="no" class="wrong">
       </label>
       </form> -->
-      <div id = "wave-one">
+      <div id="wave-one">
         <div class="buttons">
           <p class="question">
-            I don't recognize you <br>
-            Have you been here before?</p>
-          <button class="button1" onClick="showFace()">
+            I don't recognize you <br />
+            Have you been here before?
+          </p>
+          <button class="button1" onclick="py_video()">
             <img
               src="./icons/check-black-18dp.svg"
               alt="yes"
@@ -47,7 +47,7 @@
         </div>
         <div class="nose"></div>
       </div>
-      <form id = "input" class="name-input" >
+      <form id="input" class="name-input">
         <div class="holder">
           <input type="text" class="name" placeholder="Enter your name:" ... />
         </div>
