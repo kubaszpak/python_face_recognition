@@ -8,8 +8,14 @@ import eel
 cascade_location = os.path.join(os.getcwd(),'cascades/haarcascade_frontalface_default.xml')
 faceCascade = cv2.CascadeClassifier(cascade_location)
 
-def check(value):
-    print("It is working " + value)
+# def check(value):
+#     print("It is working " + value)
+
+def get_value():
+    eel.dealWithButtons()(helper)
+
+def helper(value):
+    print(value)
 
 class Recognizer(object):
     def __init__(self):
@@ -58,7 +64,11 @@ class Recognizer(object):
                     # print('unknown')
 
                     if(self.conf_counter[-1] % self.delay_value == 0):
-                        eel.changeDisplay("wave-one")(check)
+                        print('I got here')
+                        eel.changeDisplay()()
+                        value = eel.dealWithButtons()()
+                        print(value)
+                        # get_value()
                         # decision = input('Did a new person just show up? (y/n) ')
                         # name = input('Then what is your name? ')
                         # images_location = os.path.join(os.getcwd(),'resources/')

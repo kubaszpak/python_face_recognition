@@ -21,4 +21,10 @@ def video_feed():
         eel.updateImageSrc(blob)()
     
 
-eel.start('index.html')
+eel.start('index.html', block = False)
+
+# eel.startTransmision()()
+video_feed()
+
+while True:
+    eel.sleep(1.0)
