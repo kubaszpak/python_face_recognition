@@ -21,7 +21,7 @@ class Recognizer(object):
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
         self.cap.set(10,100)
-        self.delay_value = 300
+        self.delay_value = 100
         self.conf_counter = {}
         self.label_ids = {}
         self.label_ids, self.picture_list = face_train.train()
@@ -67,7 +67,7 @@ class Recognizer(object):
                         print('I got here')
                         eel.changeDisplay()()
                         value = eel.dealWithButtons()()
-                        print(value)
+                        # print(value)
                         # get_value()
                         # decision = input('Did a new person just show up? (y/n) ')
                         # name = input('Then what is your name? ')

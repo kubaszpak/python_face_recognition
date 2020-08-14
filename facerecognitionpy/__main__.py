@@ -17,7 +17,7 @@ def video_feed():
     generator = generate_image(camera)
     for image in generator:
         blob = base64.b64encode(image)
-        blob = blob.decode("utf-8")
+        blob = blob.decode('utf-8')
         eel.updateImageSrc(blob)()
     
 
