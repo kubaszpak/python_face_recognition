@@ -1,10 +1,3 @@
-// this is an async timeout util
-const timeout = async (ms) => new Promise((res) => setTimeout(res, ms));
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 eel.expose(startTransmision);
 function startTransmision() {
   eel.video_feed()();
@@ -12,61 +5,95 @@ function startTransmision() {
 
 let yesWasChosen = false;
 let noWasChosen = false;
+let inputValue = null;
 
 function clickedYes() {
   yesWasChosen = true;
+  noWasChosen = false;
 }
 
 function clickedNo() {
   noWasChosen = true;
+  yesWasChosen = false;
 }
 
 eel.expose(updateImageSrc);
 function updateImageSrc(val) {
-  let elem = document.getElementById('face');
-  elem.src = 'data:image/jpeg;base64,' + val;
+  let elem = document.getElementById("face");
+  elem.src = "data:image/jpeg;base64," + val;
 }
 
 eel.expose(changeDisplay);
-function changeDisplay() {
+function changeDisplay(id) {
   // var response;
-  var x = document.getElementById('wave-one');
-  if (x.style.display === 'none') {
-    console.log('It was none till now');
-    x.style.display = 'block';
+  var x = document.getElementById(id);
+  if (x.style.display === "none") {
+    console.log("It was none till now");
+    x.style.display = "block";
   } else {
-    console.log('It was not none till now');
-    x.style.display = 'none';
+    console.log("It was not none till now");
+    x.style.display = "none";
   }
 }
 
 eel.expose(dealWithButtons);
 function dealWithButtons() {
-  loopUntilUserChooses();
-  return 1;
-}
-
-function dealWithReturn() {
-    if (yesWasChosen) {
-      return true;
-    } else if (noWasChosen) {
-      return false;
-    } else {
-      return 'error';
-    }
-}
-
-async function help() {
-  await loopUntilUserChooses();
-}
-
-function loopUntilUserChooses() {
-  if (yesWasChosen === false && noWasChosen === false) {
-    // await sleep(500);
-    console.log('It is working')
-    setTimeout(loopUntilUserChooses , 200);
+  if (yesWasChosen) {
+    yesWasChosen = false;
+    return true;
+  } else if (noWasChosen) {
+    noWasChosen = false;
+    return false;
   }
 }
+
+// eel.expose(dealWithInput);
+// function dealWithInput() {
+  x = document.getElementById("text");
+  x.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      inputValue = x.value;
+    }
+  });
+// }
+
+
+eel.expose(getInput);
+function getInput(){
+  let temp = inputValue;
+  inputValue = null;
+  return temp;
+}
+
+eel.expose(changePlaceHolderName);
+function changePlaceHolderName(str){
+  document.getElementById("text").placeholder = str;
+}
+
+
+// eel.expose(dealWithButtons);
+// function dealWithButtons() {
+//   loopUntilUserChooses();
+//   return 1;
+// }
+// // this is an async timeout util
+// const timeout = async (ms) => new Promise((res) => setTimeout(res, ms));
+
+// function sleep(ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
+
+// async function help() {
+//   await loopUntilUserChooses();
+// }
+
+// function loopUntilUserChooses() {
+//   if (yesWasChosen === false && noWasChosen === false) {
+//     // await sleep(500);
+//     console.log('It is working')
+//     setTimeout(loopUntilUserChooses , 200);
+//   }
+// }
 
 // eel.expose(dealWithButtons2);
 // function dealWithButtons2(){

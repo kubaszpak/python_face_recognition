@@ -21,7 +21,7 @@ class Recognizer(object):
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
         self.cap.set(10,100)
-        self.delay_value = 100
+        self.delay_value = 300
         self.conf_counter = {}
         self.label_ids = {}
         self.label_ids, self.picture_list = face_train.train()
@@ -64,36 +64,45 @@ class Recognizer(object):
                     # print('unknown')
 
                     if(self.conf_counter[-1] % self.delay_value == 0):
-                        print('I got here')
-                        eel.changeDisplay()()
-                        value = eel.dealWithButtons()()
-                        # print(value)
-                        # get_value()
-                        # decision = input('Did a new person just show up? (y/n) ')
-                        # name = input('Then what is your name? ')
-                        # images_location = os.path.join(os.getcwd(),'resources/')
-                        # label_dir_location = os.path.join(images_location,name)
-                        # if decision == 'y':
-                        #     if(not os.path.isdir(label_dir_location)):
-                        #         os.makedirs(label_dir_location)
-                        #     else:
-                        #         print('Try different name, this one is probably taken ')
-                        #         name = input('Enter different name: ')
-                        #         label_dir_location = os.path.join(images_location,name)
-                        #         os.makedirs(label_dir_location)
+                        eel.changeDisplay('wave-one')()
+                        decision = None
+                        while(decision is None):
+                            decision = eel.dealWithButtons()()
+                            # eel.sleep(1.0)
+                        eel.changeDisplay('wave-two')()
+                        # eel.dealWithInput()()
+                        name = None
+                        while(name is None):
+                            name = eel.getInput()()
+                        images_location = os.path.join(os.getcwd(),'resources/')
+                        label_dir_location = os.path.join(images_location,name)
+                        if decision == True:
+                            if(not os.path.isdir(label_dir_location)):
+                                os.makedirs(label_dir_location)
+                        else:
+                            os.makedirs(label_dir_location, exist_ok=True)
+                            # else:
+                            #     eel.changeDisplay('wave-two')()
+                            #     eel.changePlaceHolderName('Enter different name: ')()
+                            #     name = None
+                            #     while(name is None):
+                            #         name = eel.getInput()()
+                            #     eel.changePlaceHolderName('Enter your name: ')()
+                            #     label_dir_location = os.path.join(images_location,name)
+                            #     os.makedirs(label_dir_location)
 
-                        # add_image_to_dir(roi_color, name)
+                        add_image_to_dir(roi_color, name)
 
                         # print(label_ids, picture_list, conf_counter, 'clear')
                         self.label_ids.clear()
                         self.picture_list.clear()
-                        # self.label_ids, self.picture_list = face_train.train()
-                        # new_roi = []
-                        # new_roi.append(roi_gray)
-                        # new_label = []
-                        # new_label.append(max(self.picture_list))
-                        # self.recognizer.update(new_roi, np.array(new_label))
-                        # # recognizer.read("trainner.yml")
+                        self.label_ids, self.picture_list = face_train.train()
+                        new_roi = []
+                        new_roi.append(roi_gray)
+                        new_label = []
+                        new_label.append(max(self.picture_list))
+                        self.recognizer.update(new_roi, np.array(new_label))
+                        self.recognizer.read("trainner.yml")
                     
                         reset_labels(self.label_ids, self.conf_counter)
 
