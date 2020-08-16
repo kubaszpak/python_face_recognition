@@ -68,19 +68,21 @@ class Recognizer(object):
                         decision = None
                         while(decision is None):
                             decision = eel.dealWithButtons()()
-                            # eel.sleep(1.0)
+                            eel.sleep(1.0)
                         eel.changeDisplay('wave-two')()
-                        # eel.dealWithInput()()
+                        eel.dealWithInput()()
                         name = None
-                        while(name is None):
+                        while(name is None or name == ''):
                             name = eel.getInput()()
+                            eel.sleep(1.0)
                         images_location = os.path.join(os.getcwd(),'resources/')
                         label_dir_location = os.path.join(images_location,name)
-                        if decision == True:
-                            if(not os.path.isdir(label_dir_location)):
-                                os.makedirs(label_dir_location)
-                        else:
-                            os.makedirs(label_dir_location, exist_ok=True)
+                        print(label_dir_location)
+                        # if decision == True:
+                        #     if(not os.path.isdir(label_dir_location)):
+                        os.makedirs(label_dir_location)
+                        # else:
+                        #     os.makedirs(label_dir_location, exist_ok=True)
                             # else:
                             #     eel.changeDisplay('wave-two')()
                             #     eel.changePlaceHolderName('Enter different name: ')()

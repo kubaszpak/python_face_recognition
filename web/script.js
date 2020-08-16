@@ -47,22 +47,22 @@ function dealWithButtons() {
   }
 }
 
-// eel.expose(dealWithInput);
-// function dealWithInput() {
-  x = document.getElementById("text");
+eel.expose(dealWithInput);
+function dealWithInput() {
+  var x = document.getElementById('text');
   x.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
       inputValue = x.value;
     }
   });
-// }
+}
 
 
 eel.expose(getInput);
 function getInput(){
-  let temp = inputValue;
-  inputValue = null;
-  return temp;
+  // let temp = inputValue;
+  // inputValue = null;
+  return inputValue;
 }
 
 eel.expose(changePlaceHolderName);
