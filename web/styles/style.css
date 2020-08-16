@@ -39,17 +39,13 @@ body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   opacity: 0.7;
-  background-color: #788bff;
+  background-color: #bfd7ff;
   border-radius: 5%;
 }
 
 #face {
   max-width: 100%;
   max-height: 100%;
-}
-
-#wave-one {
-  display: none;
 }
 
 .data-container {
@@ -146,10 +142,6 @@ button {
           transform: rotate(90deg);
   text-align: center;
   border-radius: 11.5vmax;
-}
-
-#wave-two {
-  display: none;
 }
 
 .holder {

@@ -1,11 +1,21 @@
-eel.expose(startTransmision);
-function startTransmision() {
-  eel.video_feed()();
-}
-
 let yesWasChosen = false;
 let noWasChosen = false;
 let inputValue = null;
+
+// eel.expose(startTransmision);
+// function startTransmision() {
+//   eel.video_feed()();
+// }
+
+document.addEventListener("DOMContentLoaded", function () {
+  var x = document.getElementById("text");
+  console.log(x);
+  x.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      inputValue = x.value;
+    }
+  });
+});
 
 function clickedYes() {
   yesWasChosen = true;
@@ -38,6 +48,8 @@ function changeDisplay(id) {
 
 eel.expose(dealWithButtons);
 function dealWithButtons() {
+  console.log(yesWasChosen);
+  console.log(noWasChosen);
   if (yesWasChosen) {
     yesWasChosen = false;
     return true;
@@ -47,29 +59,30 @@ function dealWithButtons() {
   }
 }
 
-eel.expose(dealWithInput);
-function dealWithInput() {
-  var x = document.getElementById('text');
-  x.addEventListener("keypress", function (e) {
-    if (e.key === "Enter") {
-      inputValue = x.value;
-    }
-  });
-}
-
+// eel.expose(dealWithInput);
+// function dealWithInput() {
+//   var x = doument.getElementById("text");
+//   x.addEventListener("keypress", function (e) {
+//     if (e.key === "Enter") {
+//       inputValue = x.value;
+//     }
+//   });
+// }
 
 eel.expose(getInput);
-function getInput(){
-  // let temp = inputValue;
+function getInput() {
+  console.log(inputValue);
+  // var temp = inputValue;
+  // console.log(inputValue);
   // inputValue = null;
+  // console.log(temp);
   return inputValue;
 }
 
-eel.expose(changePlaceHolderName);
-function changePlaceHolderName(str){
-  document.getElementById("text").placeholder = str;
-}
-
+// eel.expose(changePlaceHolderName);
+// function changePlaceHolderName(str){
+//   document.getElementById("text").placeholder = str;
+// }
 
 // eel.expose(dealWithButtons);
 // function dealWithButtons() {
@@ -128,10 +141,6 @@ function changePlaceHolderName(str){
 // function testFunction() {
 //   secondFunction();
 // }
-
-// document.addEventListener("DOMContentLoaded", function () {
-//   eel.video_feed()();
-// });
 
 // function sleep(ms) {
 //   return new Promise((resolve) => setTimeout(resolve, ms));

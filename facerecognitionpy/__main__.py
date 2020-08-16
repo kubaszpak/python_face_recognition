@@ -1,8 +1,11 @@
-from facerecognitionpy.recognizer import Recognizer
+import facerecognitionpy.recognizer as recog
 import cv2
 import os
 import eel
 import base64
+from importlib import reload
+
+reload(recog)
 
 eel.init('web')
 
@@ -13,7 +16,7 @@ def generate_image(camera):
 
 @eel.expose
 def video_feed():
-    camera = Recognizer()
+    camera = recog.Recognizer()
     generator = generate_image(camera)
     for image in generator:
         blob = base64.b64encode(image)
