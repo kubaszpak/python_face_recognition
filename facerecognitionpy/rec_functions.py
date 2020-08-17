@@ -1,5 +1,6 @@
 import os
 import cv2
+from facerecognitionpy.files import *
 
 
 def get_next_photo_number(dir):
@@ -13,20 +14,23 @@ def get_next_photo_number(dir):
         return 0
     else:
         return max(number_list) + 1
-                
-def add_image_to_dir(image,dir):
-    img_location = os.path.join(os.getcwd(),'resources/')
-    direct_location = os.path.join(img_location,dir)
+
+
+def add_image_to_dir(image, dir):
+    img_location = get_full_path('resources')
+    direct_location = os.path.join(img_location, dir)
     next = get_next_photo_number(direct_location)
-    new_file_location = os.path.join(direct_location,f'{dir}{next}.png')
+    new_file_location = os.path.join(direct_location, f'{dir}{next}.png')
     cv2.imwrite(new_file_location, image)
+
 
 def reset_labels(label_ids, conf_counter):
     for key in label_ids:
         # conf_counter[key] = delay_value * (picture_list.count(key)-1) + 1
         conf_counter[key] = 1
-    conf_counter[-1] = 1 # -1 stands for unknown person
+    conf_counter[-1] = 1  # -1 stands for unknown person
     # print(label_ids, picture_list, conf_counter)
+
 
 def idOfName(name, label_ids):
     for key, value in label_ids.items():

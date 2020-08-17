@@ -8,10 +8,12 @@ import base64
 
 eel.init('web')
 
+
 def generate_image(camera):
     while True:
         frame = camera.rec()
         yield frame
+
 
 @eel.expose
 def video_feed():
@@ -21,9 +23,9 @@ def video_feed():
         blob = base64.b64encode(image)
         blob = blob.decode('utf-8')
         eel.updateImageSrc(blob)()
-    
 
-eel.start('index.html', block = False)
+
+eel.start('index.html', block=False)
 
 # eel.startTransmision()()
 video_feed()
