@@ -7,7 +7,7 @@ def train():
     base_dir = os.getcwd()
     image_dir = os.path.join(base_dir,'resources')
 
-    cascade_location = os.path.join(base_dir,'cascades/haarcascade_frontalface_default.xml')
+    cascade_location = 'cascades/haarcascade_frontalface_default.xml'
     faceCascade = cv2.CascadeClassifier(cascade_location)
     recognizer = cv2.face.LBPHFaceRecognizer_create()
 
@@ -34,6 +34,7 @@ def train():
                     roi = image_array[y:y+h,x:x+w]
                     x_train.append(roi)
                     y_train.append(current_id-1)
+                    break
 
     # print(label_ids,x_train, y_train, 'training')
 

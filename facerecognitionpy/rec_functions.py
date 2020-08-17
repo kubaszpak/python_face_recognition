@@ -27,3 +27,9 @@ def reset_labels(label_ids, conf_counter):
         conf_counter[key] = 1
     conf_counter[-1] = 1 # -1 stands for unknown person
     # print(label_ids, picture_list, conf_counter)
+
+def idOfName(name, label_ids):
+    for key, value in label_ids.items():
+        if(value == name):
+            return key
+    return None
