@@ -1,5 +1,7 @@
 # Python Recognition With OpenCV
 
+1.0.0
+
 ## Description
 This is a Face Recognition Application that can learn new faces in runtime.  
 
