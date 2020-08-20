@@ -25,7 +25,7 @@ class Recognizer(object):
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
         self.cap.set(10, 100)
-        self.delay_value = 300
+        self.conf_min, self.conf_max, self.delay_value = read_values()
         self.conf_counter = {}
         self.label_ids = {}
         self.label_ids, self.picture_list = face_train.train()
@@ -50,7 +50,7 @@ class Recognizer(object):
             id_, conf = self.recognizer.predict(roi_gray)
             print(id_, conf)
 
-            if(conf >= 70 and conf <= 95):
+            if(conf >= self.conf_min and self.conf_max <= 95):
                 print(self.label_ids, self.picture_list,
                       self.conf_counter, 'why')
                 # print(id_)
@@ -85,6 +85,8 @@ class Recognizer(object):
                     while(name is None):
                         name = eel.getInput()()
                     print(name)
+                    name = name.replace(
+                        " ", "-").lower()
                     images_location = get_full_path('resources')
                     label_dir_location = os.path.join(images_location, name)
                     print(label_dir_location)
@@ -100,8 +102,7 @@ class Recognizer(object):
                                 'There already exists a directory with this name')
                         new_label.append(max(self.picture_list) + 1)
                         self.picture_list.append(new_label[0])
-                        self.label_ids[new_label[0]] = name.replace(
-                            " ", "-").lower()
+                        self.label_ids[new_label[0]] = name
                     else:
                         newId = idOfName(name, self.label_ids)
                         if newId == None:

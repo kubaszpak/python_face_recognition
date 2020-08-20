@@ -1,4 +1,5 @@
 import os
+import json
 import cv2
 from facerecognitionpy.files import *
 
@@ -37,3 +38,40 @@ def idOfName(name, label_ids):
         if(value == name):
             return key
     return None
+
+
+def change_conf():
+    conf_min, conf_max = input(
+        "New Minimum Conf: "), input("New Maximum Conf: ")
+    old_delay = None
+    with open("config.json", "r") as f:
+        data = json.load(f)
+        old_delay = data.get("delay")
+    with open("config.json", "w") as f:
+        new_dict = {}
+        new_dict["conf_min"] = conf_min
+        new_dict["conf_max"] = conf_max
+        new_dict["delay"] = old_delay
+        json.dump(new_dict, f)
+
+
+def change_delay():
+    new_delay = input("New delay: ")
+    old_conf_min = None
+    old_conf_max = None
+    with open("config.json", "r") as f:
+        data = json.load(f)
+        old_conf_min = data.get("conf_min")
+        old_conf_max = data.get("conf_max")
+    with open("config.json", "w") as f:
+        new_dict = {}
+        new_dict["conf_min"] = old_conf_min
+        new_dict["conf_max"] = old_conf_max
+        new_dict["delay"] = new_delay
+        json.dump(new_dict, f)
+
+
+def read_values():
+    with open("config.json", "r") as f:
+        data = json.load(f)
+        return int(data.get("conf_min")), int(data.get("conf_max")), int(data.get("delay"))

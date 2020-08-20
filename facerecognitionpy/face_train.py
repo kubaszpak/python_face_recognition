@@ -29,7 +29,7 @@ def train():
                 size = (550, 550)
                 final_image = pil_image.resize(size, Image.ANTIALIAS)
                 image_array = np.array(final_image, 'uint8')
-                faces = faceCascade.detectMultiScale(image_array, 1.1, 4)
+                faces = faceCascade.detectMultiScale(image_array, 1.1,4)
 
                 for (x, y, w, h) in faces:
                     roi = image_array[y:y+h, x:x+w]

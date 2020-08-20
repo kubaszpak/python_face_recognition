@@ -18,3 +18,5 @@ pylint = "^2.5.3"
 
 [tool.poetry.scripts]
 main = 'facerecognitionpy.__main__:main'
+change_conf = 'facerecognitionpy.rec_functions:change_conf'
+change_delay = 'facerecognitionpy.rec_functions:change_delay'
