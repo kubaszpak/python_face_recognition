@@ -1,7 +1,8 @@
 # Python Recognition With OpenCV
 
 ![Release Verision](https://img.shields.io/badge/version-2.0.1-blue)
-![Python version](https://img.shields.io/badge/python-3.8-blueviolet)<br/><br/>
+![Python version](https://img.shields.io/badge/python-3.8-blueviolet)
+![Python version](https://img.shields.io/badge/python-3.9-orange)<br/><br/>
 
 ## Description
 
@@ -48,7 +49,6 @@ Every next usage it should without a problem recognize you and display your name
 - cd/touch facerecognitionpy
 - now you can run it with:  
   _for that you need to have poetry installed, I wrote how to install it in my repository called skstyle_bot_  
-  **for safety start with poetry install --no-dev**
 
           poetry run main
 
