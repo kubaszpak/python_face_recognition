@@ -7,7 +7,7 @@ authors = ["kubaszpak <jakub.szpak.it@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 opencv-python = "^4.3.0"
-pillow = "^7.2.0"
+pillow = "^9.3.0"
 opencv-contrib-python = "^4.3.0"
 cmake = "^3.18.0"
 eel = "^0.13.2"
